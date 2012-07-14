@@ -39,18 +39,23 @@ class FaceView < UIView
     context = UIGraphicsGetCurrentContext()
 
     midpoint = CGPoint.new
-    midpoint.x = self.bounds.origin.x + self.bounds.size.width/2
-    midpoint.y = self.bounds.origin.y + self.bounds.size.height/2
+    midpoint.x = self.bounds.origin.x + self.bounds.size.width / 2
+    midpoint.y = self.bounds.origin.y + self.bounds.size.height / 2
 
-    radius = self.bounds.size.width/2
+    radius = self.bounds.size.width / 2
     if self.bounds.size.height < self.bounds.size.width
-      radius = self.bounds.size.height/2
+      radius = self.bounds.size.height / 2
     end
-    radius = radius * 0.90 # scale
+    radius = radius * 0.9 # scale
+
     CGContextSetLineWidth(context, 15.0)
-    CGContextSetStrokeColorWithColor(context, UIColor.blackColor.CGColor)
+    UIColor.blackColor.setStroke()
 
     drawCircleAtPoint(midpoint, radius, context)
+
+    NSLog midpoint.x.to_s
+    NSLog midpoint.y.to_s
+    NSLog radius.to_s
 
     eyePoint = CGPoint.new
     eyePoint.x = midpoint.x - radius * eye_h
