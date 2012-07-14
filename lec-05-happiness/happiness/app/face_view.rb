@@ -14,13 +14,22 @@ class FaceView < UIView
 
   def awakeFromNib
     NSLog "Wohoo!"
+    @scale = 0.9
     self.setup()
+  end
+
+  def pinch(gesture)
+    if (gesture.state == UIGestureRecognizerStateChanged) ||
+       (gesture.state == UIGestureRecognizerStateEnded)
+      @scale *= gesture.scale
+      gesture.scale = 1
+    end
   end
 
   def drawCircleAtPoint(point, radius, context)
     UIGraphicsPushContext(context)
     CGContextBeginPath(context)
-    CGContextAddArc(context, point.x, point.y, radius, 0, 2*3.14, true)
+    CGContextAddArc(context, point.x, point.y, radius, 0, 2*Math::PI, 0)
     CGContextStrokePath(context)
     UIGraphicsPopContext()
   end
@@ -46,10 +55,10 @@ class FaceView < UIView
     if self.bounds.size.height < self.bounds.size.width
       radius = self.bounds.size.height / 2
     end
-    radius = radius * 0.9 # scale
+    radius = radius * @scale # scale
 
-    CGContextSetLineWidth(context, 15.0)
-    UIColor.blackColor.setStroke()
+    CGContextSetLineWidth(context, 5.0)
+    UIColor.blackColor.setStroke
 
     drawCircleAtPoint(midpoint, radius, context)
 
@@ -68,15 +77,15 @@ class FaceView < UIView
     # Mouth
     mouth_start = CGPoint.new
     mouth_start.x = midpoint.x - mouth_h * radius
-    mouth_start.y = midpoint.y - mouth_v * radius
+    mouth_start.y = midpoint.y + mouth_v * radius
 
-    mouth_end = mouth_start
+    mouth_end = mouth_start.clone
     mouth_end.x += mouth_h * radius * 2
 
-    mouth_CP1 = mouth_start
+    mouth_CP1 = mouth_start.clone
     mouth_CP1.x += mouth_h * radius * 2/3
 
-    mouth_CP2 = mouth_end
+    mouth_CP2 = mouth_end.clone
     mouth_CP2.x -= mouth_h * radius * 2/3
 
     smile = 1.0
