@@ -25,6 +25,7 @@ class FaceView < UIView
       @scale *= gesture.scale
       gesture.scale = 1
     end
+    self.setNeedsDisplay()
   end
 
   def drawCircleAtPoint(point, radius, context)

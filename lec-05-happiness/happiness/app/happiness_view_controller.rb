@@ -1,11 +1,22 @@
 class HappinessViewController < UIViewController
 
+  attr_accessor :faceView
+
   def loadView
-    self.face_view = FaceView.alloc.init
-    self.face_view.setNeedsDisplay()
-    self.face_view.whenPinched do
-      self.face_view.pinch(gesture)
-    end
+    @faceView = FaceView.alloc.init
+    @faceView.userInteractionEnabled = true
+    @face_view.setNeedsDisplay()
+    view.addSubview(@faceView)
+    view = @faceView
+  end
+
+  def viewDidLoad
+    @pinchGesture = UIPinchGestureRecognizer.alloc.initWithTarget(self, action:'pinch:')
+    view.addGestureRecognizer @pinchGesture
+  end
+
+  def pinch(gesture)
+    view.pinch(gesture)
   end
 
   def shouldAutorotateToInterfaceOrientation(orientation)
