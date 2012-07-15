@@ -19,6 +19,7 @@ class FaceView < UIView
   end
 
   def pinch(gesture)
+    NSLog "Pinch gesture..."
     if (gesture.state == UIGestureRecognizerStateChanged) ||
        (gesture.state == UIGestureRecognizerStateEnded)
       @scale *= gesture.scale
@@ -62,9 +63,10 @@ class FaceView < UIView
 
     drawCircleAtPoint(midpoint, radius, context)
 
-    NSLog midpoint.x.to_s
-    NSLog midpoint.y.to_s
-    NSLog radius.to_s
+    # For debugging purposes:
+    #NSLog midpoint.x.to_s
+    #NSLog midpoint.y.to_s
+    #NSLog radius.to_s
 
     eyePoint = CGPoint.new
     eyePoint.x = midpoint.x - radius * eye_h
