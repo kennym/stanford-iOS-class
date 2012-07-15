@@ -7,7 +7,6 @@ class HappinessViewController < UIViewController
     @faceView.userInteractionEnabled = true
     @face_view.setNeedsDisplay()
     view.addSubview(@faceView)
-    view = @faceView
   end
 
   def viewDidLoad
