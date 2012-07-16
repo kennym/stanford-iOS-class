@@ -1,5 +1,7 @@
 class FaceView < UIView
 
+  attr_accessor :dataSource
+
   def scale=(scale)
     @scale = scale
     self.setNeedsDisplay()
@@ -99,7 +101,7 @@ class FaceView < UIView
     mouth_CP2 = mouth_end.clone
     mouth_CP2.x -= mouth_h * radius * 2/3
 
-    smile = 1.0
+    smile = self.dataSource.smileForFaceView(self)
     smile_offset = mouth_smile * radius * smile
 
     mouth_CP1.y += smile_offset
